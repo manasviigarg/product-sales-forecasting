@@ -12,11 +12,12 @@ Forecast outputs are treated as **inputs to planning**, not as deterministic pre
 ## 📂 Repository Structure
 
 ```text
-├── data/               # Raw datasets (TRAIN.csv, TEST_FINAL.csv)
-├── notebooks/
-│   ├── product sales forecasting.ipynb              # Core forecasting model & analysis
-│   └── product saled forecasting storytelling.ipynb # Visualization & storytelling
-├── requirements.txt    # Python dependencies
+├── product-sales-forecasting.ipynb              # Core forecasting model & analysis
+├── product-sales-forecasting-storytelling.ipynb # Visualization & storytelling
+├── TRAIN.csv                                    # Historical training data
+├── TEST_FINAL.csv                               # Holdout data for future extensions
+├── requirements.txt                             # Python dependencies
+└── ReadME.md                                    # This ReadME file
 ```
 
 ---
@@ -35,14 +36,7 @@ Key leadership questions addressed:
 ---
 
 ## 🧠 Key Concept: Why Scenario-Based Forecasting?
-Traditional single-point forecasts create **false certainty** in uncertain environments.
-
-This project intentionally models **multiple demand outcomes**:
-- **Base Case** – Continuation of historical trend
-- **Optimistic Scenario** – Demand exceeds expectations
-- **Conservative Scenario** – Demand softens below trend
-
-This allows stakeholders to **stress-test decisions before uncertainty materializes**.
+Traditional single-point forecasts create **false certainty** in uncertain environments. This project intentionally models **multiple demand outcomes** to allow stakeholders to **stress-test decisions before uncertainty materializes**.
 
 ---
 
@@ -57,8 +51,8 @@ The dataset contains historical retail sales data with the following key attribu
 - Region Code
 
 Two datasets are used:
-- `data/TRAIN.csv` — Historical data used for analysis and modeling
-- `data/TEST_FINAL.csv` — Holdout data for future extensions
+- `TRAIN.csv` — Historical data used for analysis and modeling
+- `TEST_FINAL.csv` — Holdout data for future extensions
 
 ---
 
@@ -70,61 +64,24 @@ Two datasets are used:
 - **Scikit-learn** – Linear regression modeling
 - **Statsmodels** – Time series decomposition (exploratory)
 
----
-
-## 🔍 Analysis Workflow
-
-### 1. Data Cleaning & Feature Engineering
-- Date parsing and time-based feature creation
-- Binary encoding for discount flags
-- Missing value handling
-- Weekly and monthly temporal features
+A full list of dependencies is available in `requirements.txt`.
 
 ---
 
-### 2. Decision-Oriented Exploratory Data Analysis
-EDA is explicitly tied to **business decisions**, including:
-- Time trends and seasonality → rolling planning strategies
-- Order volume vs sales → fulfillment capacity alignment
-- Discount impact (T-test) → promotion-driven buffer planning
-- Holiday effects → proactive inventory positioning
-- Store type and regional variability → differentiated stocking policies
-
----
-
-### 3. Forecasting Approach
-A **simple, stable baseline model** (linear trend) is intentionally chosen to:
-- Avoid overfitting
-- Maintain interpretability
-- Support planning rather than precision forecasting
-
----
-
-### 4. Scenario Construction
-Three forward-looking scenarios are created:
-- **Base Forecast**
-- **Optimistic Forecast (+10%)**
-- **Conservative Forecast (–10%)**
-
-These scenarios represent realistic demand bounds rather than extreme assumptions.
-
----
-
-### 5. Translation from Forecast to Action
-Forecast outputs are converted into a **planning summary table**, mapping each scenario to recommended inventory actions.
-
-This step bridges the gap between **analysis and decision-making**.
+## 🚀 How to Run
+1.  Install the required dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+2.  Run the `product-sales-forecasting.ipynb` notebook to perform the analysis and generate the forecast outputs.
+3.  Run the `product-sales-forecasting-storytelling.ipynb` notebook to see the visualizations and narrative.
 
 ---
 
 ## 📈 Key Outputs
-- Scenario-based demand forecasts (next 30 days)
-- Planning summary table with actionable recommendations
-- Exportable CSV files for BI tools or downstream reporting
-
-Generated files:
-- `forecast_scenarios.csv`
-- `scenario_summary.csv`
+The `product-sales-forecasting.ipynb` notebook generates the following files:
+- `forecast_scenarios.csv`: Contains the base, optimistic, and conservative forecast scenarios.
+- `scenario_summary.csv`: A summary table of the expected average sales for each scenario.
 
 ---
 
@@ -132,29 +89,3 @@ Generated files:
 - Assumes continuity in historical demand patterns
 - Does not account for external shocks (marketing campaigns, macroeconomic changes)
 - Intended for **short-term planning**, not long-term financial forecasting
-
----
-
-## ✅ Appropriate Use
-**This analysis is suitable for:**
-- Inventory and procurement planning
-- Scenario stress-testing
-- Operational readiness decisions
-
-**Not suitable for:**
-- Long-term revenue commitments
-- Pricing strategy without additional modeling
-- Financial forecasting without confidence intervals
-
----
-
-## 🚀 Future Enhancements
-- Region-specific forecasting models
-- Probabilistic forecasting with confidence intervals
-- Promotion and marketing calendar integration
-- Advanced time series models (ARIMA / Prophet)
-
----
-
-## 📌 Final Takeaway
-This project demonstrates how forecasting can be reframed from a **prediction exercise** into a **decision-support system**, enabling leadership to act confidently under uncertainty.
